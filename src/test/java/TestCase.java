@@ -13,7 +13,7 @@ public class TestCase {
     {
         // 1. 取得一個WebDriver的Instance
 
-        // Chrome Web Driver
+        // Chrome Web Driver For Mac (須將Driver放置此處)
         System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
         driver = new ChromeDriver();
 

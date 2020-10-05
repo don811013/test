@@ -16,7 +16,10 @@ public class Test2 {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        // Chrome Web Driver For Mac (須將Driver放置此處)
+        //System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+        // Chrome Web Driver For Windows (須將Driver放置此處)
+        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
@@ -25,16 +28,20 @@ public class Test2 {
     public void testUntitledTestCase() throws Exception {
         String parentWindow = driver.getWindowHandle();
 
-        driver.get("https://rdel-ctms-vs.elearn.com.tw/cltcms_o/unlogin-action.do?go=https%3A%2F%2Frdel-ctms-vs.elearn.com.tw%2Fcltcms_o%2Fsitemap-page.do%3Fnid%3D4088");
+        driver.get("https://rdel-ctms-vs.elearn.com.tw/cltcms_o/");
         driver.findElement(By.id("account")).click();
         driver.findElement(By.id("account")).clear();
         driver.findElement(By.id("account")).sendKeys("adm");
         driver.findElement(By.id("password")).click();
         driver.findElement(By.id("password")).clear();
         driver.findElement(By.id("password")).sendKeys("1111");
-        driver.findElement(By.id("submit_button")).click();//        Thread.sleep(3000);
+        driver.findElement(By.id("submit_button")).click();
+        Thread.sleep(3000);
+
         driver.switchTo().frame("topFrame");
         driver.findElement(By.name("menu_function_CourseManagement")).click();
+
+        Thread.sleep(1000);
         driver.switchTo().frame("rightContentFrame");
         driver.findElement(By.xpath("//td/table/tbody/tr/td")).click();
         driver.findElement(By.xpath("//a[@id='otherActions']/span/span/span")).click();
@@ -71,15 +78,19 @@ public class Test2 {
         new Select(driver.findElement(By.name("creditCategory"))).selectByVisibleText("aa");
 //        driver.findElement(By.name("creditCategory")).click();
 
+
         driver.findElement(By.name("btn_apply")).click();
         Thread.sleep(2000);
         driver.switchTo().frame(3);
         driver.findElement(By.partialLinkText("課程內容")).click();
 
-        Thread.sleep(5000);
-        driver.switchTo().frame(7);
-        driver.switchTo().frame(0);
-        driver.findElement(By.id("add_item_button")).click();
+        Thread.sleep(2000);
+        driver.switchTo().defaultContent();
+
+        driver.switchTo().frame("rightContentFrame");
+        driver.switchTo().frame("itemInfoDown");
+//        driver.switchTo().frame(0);
+        driver.findElement(By.xpath("//*/button[text()='新增課程內容']")).click();
 
         Set<String> allWindows3 = driver.getWindowHandles();
         for(String curWindow : allWindows3){
@@ -89,11 +100,15 @@ public class Test2 {
         driver.findElement(By.id("add_button")).click();
         driver.findElement(By.id("uploadTitle")).click();
         driver.findElement(By.id("uploadTitle")).sendKeys("JPG");
-        driver.findElement(By.name("File_Document")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//tbody/tr[2]/td[2]/input[@name=File_Document]")).click();
+        Thread.sleep(2000);
         driver.findElement(By.name("File_Document")).sendKeys("C:\\fakepath\\簡報1.jpg");
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         driver.findElement(By.name("continue_button")).click();
         driver.findElement(By.id("next_button")).click();
+        //tbody/tr[2]/td[2]/input/[@name=File_Document]
+
 
     }
 
